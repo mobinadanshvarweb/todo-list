@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 const SearchBar = () => {
   return (
-    <Box width="80%" padding={2} border="1px solid red" bgcolor="#133E87"></Box>
+    <Box width="80%" padding={4} bgcolor="#608BC1" borderRadius="50px"></Box>
   );
 };
 
