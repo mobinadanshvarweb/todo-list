@@ -5,6 +5,7 @@ import { InputProps } from "../../types/input-type";
 const Input: React.FC<InputProps> = ({
   placeholder,
   type,
+  value,
   onChangeHandler,
 }) => {
   return (
@@ -12,6 +13,7 @@ const Input: React.FC<InputProps> = ({
       id="outlined-basic"
       variant="outlined"
       type={type}
+      value={value}
       placeholder={placeholder}
       size="small"
       sx={{

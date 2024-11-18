@@ -6,15 +6,46 @@ import Input from "./common/Input";
 import MySelect from "./common/Select";
 import { Priority } from "../enum/priority-enum";
 import { Status } from "../enum/status-enum";
+import { useDispatch } from "react-redux";
+import { addTask } from "../redux/slice/task-slice";
+import { generateHash } from "../util/generate-hash";
 
 const MyModal = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState("");
+  const [status, setStatus] = useState("");
+  const [estimate, setEstimate] = useState<number | null>(null);
+  const [date, setDate] = useState("");
+  const [error, setError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const options = Object.entries(Priority).map(([key, value]) => ({
-    key,
-    value,
-  }));
+  console.log("modal is rendering");
+
+  const handleAddTask = () => {
+    if (title.trim() === "") {
+      setError(true);
+      return;
+    } else {
+      const newTask = {
+        id: Date.now(),
+        title: title,
+        priority: priority,
+        status: status,
+        estimate: estimate,
+        date: date,
+        hash: generateHash(),
+      };
+      dispatch(addTask(newTask));
+      setTitle("");
+      setPriority("");
+      setStatus("");
+      setEstimate(null);
+      setDate("");
+      handleClose();
+    }
+  };
   return (
     <>
       <MyButton text={<AddIcon />} onClickHandler={handleOpen} />
@@ -41,7 +72,15 @@ const MyModal = () => {
               {" "}
               New Task
             </Typography>
-            <Input onChangeHandler={() => {}} placeholder="Title" type="text" />
+            <Input
+              onChangeHandler={(e) => {
+                setTitle(e.target.value);
+                setError(false);
+              }}
+              placeholder="Title"
+              type="text"
+              value={title}
+            />
             <Box
               display="flex"
               justifyContent="space-between"
@@ -51,14 +90,18 @@ const MyModal = () => {
             >
               <MySelect
                 label="Priority"
-                onChangeHandler={() => {}}
-                value=""
+                onChangeHandler={(e) => {
+                  setPriority(e.target.value);
+                }}
+                value={priority}
                 optionsEnum={Priority}
               />
               <MySelect
                 label="Status"
-                onChangeHandler={() => {}}
-                value=""
+                onChangeHandler={(e) => {
+                  setStatus(e.target.value);
+                }}
+                value={status}
                 optionsEnum={Status}
               />
             </Box>
@@ -70,17 +113,28 @@ const MyModal = () => {
               sx={{ flexDirection: { xs: "column", md: "row" } }}
             >
               <Input
-                onChangeHandler={() => {}}
+                onChangeHandler={(e) => {
+                  setDate(e.target.value);
+                }}
                 placeholder="Date"
                 type="date"
+                value={date}
               />
               <Input
-                onChangeHandler={() => {}}
+                onChangeHandler={(e) => {
+                  const value = Math.max(1, parseInt(e.target.value, 10));
+                  setEstimate(value);
+                }}
                 placeholder="Estimate"
                 type="number"
+                value={String(estimate)}
               />
             </Box>
-            <MyButton onClickHandler={() => {}} text="Add Task" width="100%" />
+            <MyButton
+              onClickHandler={handleAddTask}
+              text="Add Task"
+              width="100%"
+            />
           </Paper>
         </Box>
       </Modal>
