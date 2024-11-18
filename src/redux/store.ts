@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import taskSlice from "./slice/task-slice";
+import loginSlice from "./slice/login-slice";
 
 export const store = configureStore({
   reducer: {
     task: taskSlice,
+    login: loginSlice,
   },
 });
 

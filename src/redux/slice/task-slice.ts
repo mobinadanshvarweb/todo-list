@@ -20,6 +20,7 @@ export const taskSlice = createSlice({
     addTask: (state, action) => {
       state.tasks.push(action.payload);
       localStorage.setItem("task", JSON.stringify(state.tasks));
+      console.log(action.payload, "reduxxx");
     },
   },
 });
