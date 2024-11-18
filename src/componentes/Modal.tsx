@@ -1,14 +1,20 @@
-import { Box, Modal, Paper, TextField, Typography } from "@mui/material";
+import { Box, Modal, Paper, Typography } from "@mui/material";
 import MyButton from "./common/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import Input from "./common/Input";
+import MySelect from "./common/Select";
+import { Priority } from "../enum/priority-enum";
+import { Status } from "../enum/status-enum";
 
 const MyModal = () => {
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const options = Object.entries(Priority).map(([key, value]) => ({
+    key,
+    value,
+  }));
   return (
     <>
       <MyButton text={<AddIcon />} onClickHandler={handleOpen} />
@@ -43,15 +49,17 @@ const MyModal = () => {
               gap="10px"
               sx={{ flexDirection: { xs: "column", md: "row" } }}
             >
-              <Input
+              <MySelect
+                label="Priority"
                 onChangeHandler={() => {}}
-                placeholder="Priority"
-                type="text"
+                value=""
+                optionsEnum={Priority}
               />
-              <Input
+              <MySelect
+                label="Status"
                 onChangeHandler={() => {}}
-                placeholder="Status"
-                type="text"
+                value=""
+                optionsEnum={Status}
               />
             </Box>
             <Box
@@ -64,12 +72,12 @@ const MyModal = () => {
               <Input
                 onChangeHandler={() => {}}
                 placeholder="Date"
-                type="text"
+                type="date"
               />
               <Input
                 onChangeHandler={() => {}}
                 placeholder="Estimate"
-                type="text"
+                type="number"
               />
             </Box>
             <MyButton onClickHandler={() => {}} text="Add Task" width="100%" />
