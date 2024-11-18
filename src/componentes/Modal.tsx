@@ -21,7 +21,7 @@ const MyModal = () => {
   const [error, setError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log("modal is rendering");
+  console.log(date, "DATEEE");
 
   const handleAddTask = () => {
     if (title.trim() === "") {
@@ -48,7 +48,12 @@ const MyModal = () => {
   };
   return (
     <>
-      <MyButton text={<AddIcon />} onClickHandler={handleOpen} />
+      <MyButton
+        color="#133E87"
+        borderColor="#133E87"
+        text={<AddIcon />}
+        onClickHandler={handleOpen}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -131,6 +136,8 @@ const MyModal = () => {
               />
             </Box>
             <MyButton
+              color="#F3F3E0"
+              bgColor="#133E87"
               onClickHandler={handleAddTask}
               text="Add Task"
               width="100%"

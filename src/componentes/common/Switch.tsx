@@ -67,13 +67,13 @@ const MySwitch: React.FC<SwitchProps> = ({
         spacing={1}
         sx={{ alignItems: "center" }}
       >
-        <Typography color="#133E87" fontSize="14px">
+        {/* <Typography color="#133E87" fontSize="14px">
           {leftText}
-        </Typography>
+        </Typography> */}
         <AntSwitch defaultChecked inputProps={{ "aria-label": "ant design" }} />
-        <Typography color="#133E87" fontSize="14px">
+        {/* <Typography color="#133E87" fontSize="14px">
           {rightText}
-        </Typography>
+        </Typography> */}
       </Stack>
     </Box>
   );
