@@ -1,15 +1,33 @@
-import { Box } from "@mui/material";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
-const Chart = () => {
-  // Data retrieved from https://netmarketshare.com/
-  Highcharts.chart("container", {
+const TaskChart = () => {
+  const tasks = useSelector((state: RootState) => state.task.tasks);
+
+  const groupedTasks = tasks.reduce((acc: Record<string, number>, task) => {
+    if (task.status) {
+      acc[task.status] = (acc[task.status] || 0) + 1;
+    }
+    return acc;
+  }, {});
+
+  const chartData = Object.entries(groupedTasks).map(([status, count]) => ({
+    name: status,
+    y: count,
+  }));
+
+  const options = {
     chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: 0,
+      type: "pie",
+      backgroundColor: null, // پس‌زمینه شفاف
+      plotBackgroundColor: null, // پس‌زمینه چارت نیز شفاف
+      plotBorderWidth: 0, // حذف مرز
       plotShadow: false,
     },
     title: {
-      text: "Browser<br>shares<br>January<br>2022",
+      text: "TodoList<br>Status<br>",
       align: "center",
       verticalAlign: "middle",
       y: 60,
@@ -44,21 +62,15 @@ const Chart = () => {
     series: [
       {
         type: "pie",
-        name: "Browser share",
+        name: "Tasks",
         innerSize: "50%",
-        data: [
-          ["Chrome", 73.86],
-          ["Edge", 11.97],
-          ["Firefox", 5.52],
-          ["Safari", 2.98],
-          ["Internet Explorer", 1.9],
-          ["Other", 3.77],
-        ],
+        colorByPoint: true,
+        data: chartData,
       },
     ],
-  });
+  };
 
-  return <Box width="50%" height="300px"></Box>;
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
 
-export default Chart;
+export default TaskChart;
