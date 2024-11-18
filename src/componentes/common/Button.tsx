@@ -3,6 +3,7 @@ import React from "react";
 import { ButtonProps } from "../../types/button-type";
 const MyButton: React.FC<ButtonProps> = ({
   color,
+  border,
   borderColor,
   bgColor,
   text,
@@ -14,6 +15,7 @@ const MyButton: React.FC<ButtonProps> = ({
       onClick={onClickHandler}
       variant="outlined"
       sx={{
+        border: border,
         color: color,
         borderColor: borderColor,
         width: width,

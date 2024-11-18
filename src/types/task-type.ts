@@ -8,3 +8,8 @@ export interface Task {
   hash: string;
   isAdmin?: string;
 }
+export interface Filter {
+  priority: string;
+  estimate: number;
+  status: string;
+}

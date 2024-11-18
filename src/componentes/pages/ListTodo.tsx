@@ -4,17 +4,30 @@ import { RootState } from "../../redux/store";
 import ItemTodo from "./ItemTodo";
 
 const ListTodo = () => {
-  const { tasks, search } = useSelector((state: RootState) => state.task);
+  const { tasks, search, filter } = useSelector(
+    (state: RootState) => state.task
+  );
   const isAdmin = useSelector((state: RootState) => state.login.admin.userName);
 
   const searchedTasks = tasks.filter((task) =>
     task.title.toLowerCase().includes(search.toLowerCase())
   );
-  console.log(searchedTasks);
+  const filteredTasks = searchedTasks.filter((task) => {
+    const matchPriority = filter.priority
+      ? task.priority === filter.priority
+      : true;
+    const matchStatus = filter.status ? task.status === filter.status : true;
+    const matchEstimate = filter.estimate
+      ? String(task.estimate).toLowerCase() ===
+        String(filter.estimate).toLowerCase()
+      : true;
+
+    return matchPriority && matchStatus && matchEstimate;
+  });
 
   return (
     <Box width="100%" display="flex" flexDirection="column" gap="20px">
-      {searchedTasks?.map((task) => {
+      {filteredTasks?.map((task) => {
         return (
           <ItemTodo
             key={task.id}

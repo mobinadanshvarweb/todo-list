@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import Search from "./Search";
 import Filter from "./Filter";
+import Search from "./Search";
 import Sort from "./Sort";
+import ResetSearchBar from "./ResetSearchBar";
 
 const SearchBar = () => {
   return (
@@ -14,10 +15,13 @@ const SearchBar = () => {
       justifyContent="space-between"
       gap="20px"
       alignItems="center"
+      position="relative"
     >
       <Filter />
       <Search />
       <Sort />
+
+      <ResetSearchBar />
     </Box>
   );
 };
