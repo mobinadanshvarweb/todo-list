@@ -13,8 +13,6 @@ const ItemTodo: React.FC<Task> = ({
   hash,
   isAdmin,
 }) => {
-  console.log(isAdmin, "isAdmin");
-
   return (
     <Box
       sx={{

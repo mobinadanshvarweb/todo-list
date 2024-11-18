@@ -4,12 +4,17 @@ import { RootState } from "../../redux/store";
 import ItemTodo from "./ItemTodo";
 
 const ListTodo = () => {
-  const tasks = useSelector((state: RootState) => state.task.tasks);
+  const { tasks, search } = useSelector((state: RootState) => state.task);
   const isAdmin = useSelector((state: RootState) => state.login.admin.userName);
+
+  const searchedTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(search.toLowerCase())
+  );
+  console.log(searchedTasks);
 
   return (
     <Box width="100%" display="flex" flexDirection="column" gap="20px">
-      {tasks?.map((task) => {
+      {searchedTasks?.map((task) => {
         return (
           <ItemTodo
             key={task.id}

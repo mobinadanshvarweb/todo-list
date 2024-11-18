@@ -3,6 +3,7 @@ import { Task } from "../../types/task-type";
 
 export interface TaskState {
   tasks: Task[];
+  search: string;
 }
 
 const loadLocal = () => {
@@ -11,6 +12,7 @@ const loadLocal = () => {
 };
 const initialState: TaskState = {
   tasks: loadLocal(),
+  search: "",
 };
 
 export const taskSlice = createSlice({
@@ -20,11 +22,13 @@ export const taskSlice = createSlice({
     addTask: (state, action) => {
       state.tasks.push(action.payload);
       localStorage.setItem("task", JSON.stringify(state.tasks));
-      console.log(action.payload, "reduxxx");
+    },
+    setSearch: (state, action) => {
+      state.search = action.payload;
     },
   },
 });
 
-export const { addTask } = taskSlice.actions;
+export const { addTask, setSearch } = taskSlice.actions;
 
 export default taskSlice.reducer;

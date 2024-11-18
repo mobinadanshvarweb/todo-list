@@ -21,7 +21,6 @@ const MyModal = () => {
   const [error, setError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log(date, "DATEEE");
 
   const handleAddTask = () => {
     if (title.trim() === "") {
