@@ -15,6 +15,7 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       size="small"
       sx={{
+        width: "100%",
         borderRadius: 1,
         bgcolor: "#CBDCEB",
         "& .MuiOutlinedInput-root": {
