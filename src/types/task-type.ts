@@ -7,6 +7,7 @@ export interface Task {
   status: string;
   hash: string;
   isAdmin?: string;
+  isPassword?: string;
 }
 export interface Filter {
   priority: string;

@@ -8,6 +8,9 @@ const ListTodo = () => {
     (state: RootState) => state.task
   );
   const isAdmin = useSelector((state: RootState) => state.login.admin.userName);
+  const isPassword = useSelector(
+    (state: RootState) => state.login.admin.password
+  );
 
   const searchedTasks = tasks.filter((task) =>
     task.title.toLowerCase().includes(search.toLowerCase())
@@ -39,6 +42,7 @@ const ListTodo = () => {
             hash={task.hash}
             id={task.id}
             isAdmin={isAdmin}
+            isPassword={isPassword}
           />
         );
       })}

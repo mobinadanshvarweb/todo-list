@@ -5,4 +5,5 @@ export enum Status {
   WARNING = "Warning",
   PENDING = "Pending",
   FAILED = "Failed",
+  OK = "Ok",
 }

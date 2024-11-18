@@ -9,7 +9,7 @@ const SearchBar = () => {
     <Box
       width="80%"
       padding={2}
-      bgcolor="#608BC1"
+      bgcolor="#133E87"
       borderRadius="50px"
       display="flex"
       justifyContent="space-between"

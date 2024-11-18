@@ -1,7 +1,10 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HighchartsAccessibility from "highcharts/modules/accessibility";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+
+HighchartsAccessibility(Highcharts); // افزودن ماژول به Highcharts
 
 const TaskChart = () => {
   const tasks = useSelector((state: RootState) => state.task.tasks);

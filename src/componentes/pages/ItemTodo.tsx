@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Tooltip, IconButton } from "@mui/material";
 import { Task } from "../../types/task-type";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Delete from "./edit-delete/Delete";
+import Edit from "./edit-delete/Edit";
+import React from "react";
+import { formatEstimate } from "../../util/formatEstimate";
 
 const ItemTodo: React.FC<Task> = ({
   id,
@@ -12,7 +14,20 @@ const ItemTodo: React.FC<Task> = ({
   estimate,
   hash,
   isAdmin,
+  isPassword,
 }) => {
+  const [copySuccess, setCopySuccess] = React.useState(false);
+
+  const handleCopy = async (hash: string) => {
+    try {
+      await navigator.clipboard.writeText(hash);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -20,20 +35,19 @@ const ItemTodo: React.FC<Task> = ({
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        bgcolor: "#F3F3E0",
+        bgcolor: "#608BC1",
         borderRadius: "16px",
         padding: "20px",
         boxShadow:
-          "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.06)", // زیبا و نرم
-        transition: "transform 0.3s ease, box-shadow 0.3s ease", // افکت انیمیشن
+          "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.06)",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
         "&:hover": {
-          transform: "scale(1.02)", // افزایش اندازه در حالت هاور
+          transform: "scale(1.03)",
           boxShadow:
-            "0px 10px 15px rgba(0, 0, 0, 0.15), 0px 4px 6px rgba(0, 0, 0, 0.1)", // شدوی قوی‌تر در هاور
+            "0px 10px 20px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.1)",
         },
       }}
     >
-      {/* بخش بالایی */}
       <Box
         sx={{
           width: "100%",
@@ -44,10 +58,15 @@ const ItemTodo: React.FC<Task> = ({
         }}
       >
         <Typography
-          sx={{ color: "#133E87", fontWeight: "bold", fontSize: "18px" }}
+          sx={{
+            color: "#F3F3E0",
+            fontWeight: "bold",
+            fontSize: "18px",
+          }}
         >
           {title}
         </Typography>
+
         <Box
           sx={{
             display: "flex",
@@ -55,39 +74,34 @@ const ItemTodo: React.FC<Task> = ({
             gap: "10px",
           }}
         >
-          {isAdmin === "admin" && (
-            <Box
-              sx={{
-                px: 2,
-                py: 1,
-                borderRadius: "12px",
-                bgcolor: "#CBDCEB",
-                color: "#800000",
-                fontSize: "12px",
-                fontWeight: "bold",
-              }}
+          {isAdmin === "admin" && isPassword === "1234" && (
+            <Tooltip
+              title={copySuccess ? "Copied!" : "Copy to clipboard"}
+              arrow
             >
-              {hash}
-            </Box>
+              <IconButton
+                onClick={() => handleCopy(hash)}
+                sx={{
+                  bgcolor: "#CBDCEB",
+                  color: "#800000",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  borderRadius: "12px",
+                  padding: "5px",
+                  ":hover": {
+                    bgcolor: "#a3c1d1",
+                  },
+                }}
+              >
+                {hash}
+              </IconButton>
+            </Tooltip>
           )}
-          <DriveFileRenameOutlineIcon
-            sx={{
-              color: "#133E87",
-              cursor: "pointer",
-              "&:hover": { color: "#608BC1" },
-            }}
-          />
-          <DeleteIcon
-            sx={{
-              color: "#133E87",
-              cursor: "pointer",
-              "&:hover": { color: "#E63946" },
-            }}
-          />
+          <Edit id={id} />
+          <Delete id={id} hashTask={hash} />
         </Box>
       </Box>
 
-      {/* بخش جزئیات */}
       <Box
         sx={{
           width: "100%",
@@ -98,17 +112,18 @@ const ItemTodo: React.FC<Task> = ({
           gap: "10px",
         }}
       >
-        <Typography sx={{ color: "#133E87", fontWeight: "500" }}>
+        <Typography sx={{ color: "#F3F3E0", fontWeight: "500" }}>
           Priority: <span style={{ fontWeight: "bold" }}>{priority}</span>
         </Typography>
-        <Typography sx={{ color: "#133E87", fontWeight: "500" }}>
+        <Typography sx={{ color: "#F3F3E0", fontWeight: "500" }}>
           Status: <span style={{ fontWeight: "bold" }}>{status}</span>
         </Typography>
-        <Typography sx={{ color: "#133E87", fontWeight: "500" }}>
+        <Typography sx={{ color: "#F3F3E0", fontWeight: "500" }}>
           Date: <span style={{ fontWeight: "bold" }}>{date}</span>
         </Typography>
-        <Typography sx={{ color: "#133E87", fontWeight: "500" }}>
-          Estimate: <span style={{ fontWeight: "bold" }}>{estimate}</span>
+        <Typography sx={{ color: "#F3F3E0", fontWeight: "500" }}>
+          Estimate:{" "}
+          <span style={{ fontWeight: "bold" }}>{formatEstimate(estimate)}</span>
         </Typography>
       </Box>
     </Box>

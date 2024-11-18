@@ -6,7 +6,7 @@ import { Priority } from "../../../enum/priority-enum";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useState } from "react";
-import { resetSort, setSort } from "../../../redux/slice/task-slice";
+import { setSort } from "../../../redux/slice/task-slice";
 
 const Sort = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,6 @@ const Sort = () => {
   };
   const handleClose = () => {
     setContainerEl(null);
-    // dispatch(resetSort());
   };
   const open = Boolean(containerEl);
   const id = open ? "simple-popover" : undefined;
@@ -30,7 +29,7 @@ const Sort = () => {
         onClickHandler={handleOpen}
         text={
           <SwapVertIcon
-            sx={{ color: "#133E87", cursor: "pointer", fontSize: 35 }}
+            sx={{ color: "#F3F3E0", cursor: "pointer", fontSize: 35 }}
           />
         }
       />

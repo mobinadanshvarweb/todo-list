@@ -27,7 +27,6 @@ const Filter = () => {
   };
   const handleClose = () => {
     setContainerEl(null);
-    // dispatch(resetFilter());
   };
   const open = Boolean(containerEl);
   const id = open ? "simple-popover" : undefined;
@@ -40,7 +39,7 @@ const Filter = () => {
         onClickHandler={handleOpen}
         text={
           <FilterListIcon
-            sx={{ color: "#133E87", cursor: "pointer", fontSize: 35 }}
+            sx={{ color: "#F3F3E0", cursor: "pointer", fontSize: 35 }}
           />
         }
       />

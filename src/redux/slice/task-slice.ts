@@ -5,6 +5,7 @@ export interface TaskState {
   search: string;
   filter: Filter;
   sort: string;
+  hash: string;
 }
 
 const loadLocal = () => {
@@ -15,6 +16,7 @@ const initialState: TaskState = {
   tasks: loadLocal(),
   search: "",
   sort: "",
+  hash: "",
   filter: {
     priority: "",
     estimate: 0,
@@ -42,6 +44,26 @@ export const taskSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+    setHash: (state, action) => {
+      state.hash = action.payload;
+    },
+    setEdit: (state, action) => {
+      const index = state.tasks.findIndex(
+        (task) => task.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.tasks[index] = action.payload;
+        localStorage.setItem("task", JSON.stringify(state.tasks));
+      }
+    },
+    setDelete: (state, action) => {
+      state.tasks = state.tasks.filter((task) => {
+        if (state.hash === task.hash) {
+          task.id !== action.payload;
+        }
+      });
+      localStorage.setItem("task", JSON.stringify(state.tasks));
+    },
     resetSearchBar: (state) => {
       state.search = "";
       state.sort = "";
@@ -54,7 +76,15 @@ export const taskSlice = createSlice({
   },
 });
 
-export const { addTask, setSearch, setFilter, setSort, resetSearchBar } =
-  taskSlice.actions;
+export const {
+  addTask,
+  setSearch,
+  setFilter,
+  setSort,
+  setHash,
+  setEdit,
+  setDelete,
+  resetSearchBar,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

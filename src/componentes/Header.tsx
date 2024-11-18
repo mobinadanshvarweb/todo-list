@@ -13,6 +13,8 @@ const Header = () => {
         flexDirection: { xs: "column", md: "row" },
         justifyContent: "space-between",
         alignItems: "center",
+        boxShadow:
+          "0px 4px 10px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1)",
         py: 1,
         px: 2,
         gap: { xs: 2, md: 0 },
